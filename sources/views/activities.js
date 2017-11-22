@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
-import {getActivities} from "models/activities";
+import {getActivities, removeActivity} from "models/activities";
+import {getTypeOntions} from "models/activityTypes";
 
 
 export default class ActivitiesView extends JetView{
@@ -18,8 +19,8 @@ export default class ActivitiesView extends JetView{
 			borderless:true,
 			width: 400,
 			elements: [
-				{ view:"text", label:"Details", name:"Details" },
-				{ view:"select", label:"Type", name:"TypeId", options:[] },
+				{ view:"textarea", label:"Details", name:"Details" },
+				{ view:"select", label:"Type", name:"TypeID", options:[]},// getTypeOntions() },
 				{ view:"select", label: "Contact", name:"ContactID", options:[]},
 				{ view:"datepicker", label: "Date",  timepicker: true, name: "DueDate"},
 				{ view:"checkbox", label:" Completed", name: "Completed"},
@@ -50,8 +51,10 @@ export default class ActivitiesView extends JetView{
 				{ id:"ContactID",   header:["Contact", {content:"selectFilter"}], sort:"text"},
 				{ id:"editCell", 	header:"Edit", 	template:"<span class='webix_icon fa-edit'></span>"},
 				{ id:"deleteCell", 	header:"Delete", 	template: "<span class='webix_icon fa-trash-o'></span>"}
-			]
-			//url:"http://localhost:8096/api/v1/activities/"
+			],
+			onClick: {
+				"fa-trash-o": (ev, id)=> { removeActivity(id); }
+			}
 		};
 
 		var ui = { rows:[addBtn, dataTable] };
@@ -62,5 +65,4 @@ export default class ActivitiesView extends JetView{
 	init(view){
 		view.queryView({ view:"datatable"}).parse(getActivities());
 	}
-	
 }

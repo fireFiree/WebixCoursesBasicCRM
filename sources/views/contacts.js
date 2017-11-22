@@ -20,8 +20,10 @@ export default class ContactsView extends JetView{
 				html += spanIcon("phone", obj.Phone);
 			if (obj.Company)
 				html += spanIcon("building", obj.Company);
-			if (obj.Company)
+			if (obj.Job)
 				html += spanIcon("universal-access", obj.Job);
+			if (obj.Birthday)
+				html += spanIcon("birthday-cake", obj.Birthday);
 
 			return html + "</div>";
 		}
@@ -42,6 +44,10 @@ export default class ContactsView extends JetView{
 				onAfterSelect: function(){
 					var item = $$("contactsList").getSelectedItem();
 					$$("contactDescription").parse(item);
+				},
+				onAfterLoad: function(){
+					var id = this.getFirstId();
+					this.select(id);
 				}
 			}
 		};
@@ -49,7 +55,6 @@ export default class ContactsView extends JetView{
 		var conctactDescription = { view: "template",
 			id: "contactDescription",
 			borderless: true,
-			//url:"http://localhost:8096/api/v1/contacts/",
 			template: function( obj ){
 				return contactDetailsToHtml(obj);
 			}
@@ -57,14 +62,17 @@ export default class ContactsView extends JetView{
 		};
 
 		var buttons = { cols:[
-			{view:"button", type:"icon", icon:"edit", label: "Edit", width: 100},
-			{view:"button", label: "Delete", type:"icon", icon:"trash-o", width: 100}
+			{view:"button", type:"icon", icon:"edit", label: "Edit", width: 130},
+			{view:"button", label: "Delete", type:"icon", icon:"trash-o", width: 130}
 		]};
 
 		var ui = { cols:[ contactsList,  conctactDescription, {rows: [buttons, {}]} ] };
 		return ui;
 	}
 	init(view){
-		
+		var list = view.queryView({ view:"list"});
+		var id = list.getFirstId();
+		list.select(id);
+
 	}	
 }
