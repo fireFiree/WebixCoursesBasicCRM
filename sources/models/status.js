@@ -23,6 +23,4 @@ function removeStatus(id){
 	data.remove(id);
 }
 
-
-
 export { getStatuses, getStatusItem, addStatus, editStatus, removeStatus};

@@ -22,11 +22,8 @@ function editType(id, obj){
 function removeType(id){
 	types.remove(id);
 }
-//
-//   Ошибочка при использовании((
-//
-//
-function getTypeOntions(){
+
+function getTypeOptions(){
 
 	var options = new webix.DataCollection();
 
@@ -39,4 +36,4 @@ function getTypeOntions(){
 	return options;
 }
 
-export { getTypes, getTypeItem, addType, editType, removeType, getTypeOntions};
+export { getTypes, getTypeItem, addType, editType, removeType, getTypeOptions};
