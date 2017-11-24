@@ -25,15 +25,15 @@ function removeType(id){
 
 function getTypeOptions(){
 
-	var options = new webix.DataCollection();
+	var options = [];
 
-	types.waitData.then(webix.bind(function(){
-		this.data.each(function(obj){
-			options.add({id:obj.id, value: obj.Value});
+	return types.waitData.then(function(){
+		types.data.each(function(obj){
+			options.push({id:obj.id, value: obj.Value});
 		});
-	}, types));
- 
-	return options;
+		return options;
+	});
+
 }
 
 export { getTypes, getTypeItem, addType, editType, removeType, getTypeOptions};

@@ -16,7 +16,14 @@ function addActivity(obj){
 }
 
 function editActivity(id, obj){
-	data.update(id, obj);
+	data.updateItem(id, obj);
+}
+
+function activityAction(id, obj){
+	if( id === undefined)
+		addActivity(obj);
+	else
+		editActivity(id, obj);
 }
 
 function removeActivity(id){
@@ -25,4 +32,4 @@ function removeActivity(id){
 
 
 
-export { getActivities, getActivityItem, addActivity, editActivity, removeActivity};
+export { getActivities, getActivityItem, addActivity, editActivity, removeActivity, activityAction};

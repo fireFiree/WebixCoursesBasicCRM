@@ -24,17 +24,16 @@ function removeContact(id){
 }
 
 function getContactOptions(){
-	var options = new webix.DataCollection();
+	var options = [];
 	
-	data.waitData.then(webix.bind(function(){
-		this.data.each(function(obj){
-			options.add({id:obj.id, value: (obj.FirstName + obj.LastName || obj.Email)});
+	return data.waitData.then(function(){
+		data.data.each(function(obj){
+			options.push({id:obj.id, value: (obj.FirstName + obj.LastName || obj.Email)});
 		});
-	}, data));
+		return options;
+	});
 
-	return options;
+	
 }
-
-
 
 export { getContacts, getContactItem, addContact, editContact, removeContact, getContactOptions};

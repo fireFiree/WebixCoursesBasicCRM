@@ -2,50 +2,36 @@ import {JetView} from "webix-jet";
 import {getContacts} from "models/contacts";
 
 
-export default class ContactsView extends JetView{
-	config(){
-		
-		function listTemplate(obj){
-			return "<img src='" + obj.Photo + "' class='round'/><div class='shortDescription'><b>" + obj.FirstName + " " + obj.LastName + "</b><br/>"+obj.Email+"</div>";
+export default class ContactsView extends JetView {
+	config() {
+		function listTemplate(obj) {
+			return `<img src='${ obj.Photo}' class='round'/><div class='shortDescription'><b>${ obj.FirstName} ${ obj.LastName}</b><br/>${obj.Email}</div>`;
 		}
 
-		var contactsList = { view: "list",
-			id:"contactsList", 
-			borderless:true,   
+		let contactsList = {view: "list",
+			id: "contactsList",
+			borderless: true,
 			template: listTemplate,
 			width: 300,
-			type: { height: 70 },
-			select:true,
-			on: { 
-				onAfterSelect: function(){
-					var item = $$("contactsList").getSelectedItem();
-					$$("contactDescription").parse(item);
-				},
-				onAfterLoad: function(){
-					var id = this.getFirstId();
-					this.select(id);
+			type: {height: 70},
+			select: true,
+			on: {
+				onSelectChange: (id) => {
+					this.show(`./card?id=${ id}`);
 				}
 			}
 		};
 
-		var conctactDescription = { view: "template",
-			id: "contactDescription",
-			borderless: true,
-			template: function( obj ){
-				return contactDetailsToHtml(obj);
-			}
+		let ui = {cols: [contactsList, {$subview: true}]};
 
-		};
-
-		var buttons = { cols:[
-			{view:"button", type:"icon", icon:"edit", label: "Edit", width: 130},
-			{view:"button", label: "Delete", type:"icon", icon:"trash-o", width: 130}
-		]};
-
-		var ui = { cols:[ contactsList,  conctactDescription, {rows: [buttons, {}]} ] };
 		return ui;
 	}
-	init(view){
-		view.queryView({ view:"list"}).parse(getContacts());
-	}	
+	init(view) {
+		let list = view.queryView({view: "list"});
+		list.parse(getContacts());
+
+		getContacts().waitData.then(() => {
+			list.select( list.getFirstId());
+		});
+	}
 }

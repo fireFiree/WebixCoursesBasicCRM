@@ -3,39 +3,62 @@ import {getActivities, removeActivity} from "models/activities";
 import {getContactOptions} from "models/contacts";
 import {getTypeOptions} from "models/activityTypes";
 import {openPopUp} from "views/popup";
+import {WindowView} from "views/window";
 
 
-export default class ActivitiesView extends JetView{
-	config(){
-
-		var addBtn = { view:"button", 
-			label: "Add Activity", 
-			type:"icon", 
-			icon: "plus-square", 
-			click: openPopUp 
+export default class ActivitiesView extends JetView {
+	config() {
+			let addBtn = {view: "button",
+			label: "Add Activity",
+			type: "icon",
+			icon: "plus-square",
+			click(id) { this.win.show($$(id).$view);}
 		};
 
-		var dataTable = { view:"datatable", 
-			columns:[
-				{ id:"Completed",   header:"",	template:" <input type='checkbox' checked>"},
-				{ id:"TypeID",   	header:["Activities Type", {content:"selectFilter"}], sort:"text", collection: getTypeOptions()},
-				{ id:"DueDate", 	header:["Due Date", {content:"dateFilter"} ], sort:"text"},
-				{ id:"Details",   	header:["Details", {content:"textFilter"}], fillspace: true, sort:"text"},
-				{ id:"ContactID",   header:["Contact", {content:"selectFilter"}], sort:"text", collection: getContactOptions()},
-				{ id:"editCell", 	header:"Edit", 		template:"<span class='webix_icon fa-edit'></span>"},
-				{ id:"deleteCell", 	header:"Delete", 	template: "<span class='webix_icon fa-trash-o'></span>"}
+		let dataTable = {view: "datatable",
+			columns: [
+				{id: "State", header: "",	template: "{common.checkbox()}", checkValue: "Close", uncheckedValue: "Open", width: 30},
+				{id: "TypeID", header: ["Activities Type", {content: "selectFilter"}], width: 300, sort: "text"},
+				{id: "DueDate", 	header: ["Due Date", {content: "dateFilter"}], sort: "text", width: 150},
+				{id: "Details", header: ["Details", {content: "textFilter"}], fillspace: true, sort: "text"},
+				{id: "ContactID", header: ["Contact", {content: "selectFilter"}], sort: "text"},
+				{id: "editCell", 	header: "Edit", 		template: "<span class='webix_icon fa-edit'></span>", width: 30},
+				{id: "deleteCell", 	header: "Delete", 	template: "<span class='webix_icon fa-trash-o'></span>", width: 30}
 			],
 			onClick: {
-				"fa-trash-o": (ev, id)=> { removeActivity(id); }
+				"fa-trash-o": (ev, id) => {
+					webix.confirm({
+						text: "Are you sure?",
+ok: "Yes",
+cancel: "Cancel",
+						callback: (res) => {
+							if (res) {
+								removeActivity(id);
+							}
+						}
+					}); 
+},
+				"fa-edit": (ev, id) => { this.win.show($$(id).$view); }
 			}
 		};
 
-		var ui = { rows:[addBtn, dataTable] };
+		let ui = {rows: [addBtn, dataTable]};
 
 
 		return ui;
 	}
-	init(view){
-		view.queryView({ view:"datatable"}).parse(getActivities());
+	init(view) {
+		view.queryView({view: "datatable"}).parse(getActivities());
+
+		getContactOptions().then(( options) => {
+			view.queryView({ view:"datatable"}).getColumnConfig("ContactID").collection = options;
+			view.queryView({ view:"datatable"}).refreshColumns();
+		});
+
+		getTypeOptions().then(( options) => {
+			view.queryView({ view:"datatable"}).getColumnConfig("TypeID").collection = options;
+			view.queryView({ view:"datatable"}).refreshColumns();
+		});
+
 	}
 }
