@@ -1,39 +1,37 @@
-var data = new webix.DataCollection({
-	url:"http://localhost:8096/api/v1/contacts/",
-	save:"rest->http://localhost:8096/api/v1/contacts/"
+let data = new webix.DataCollection({
+	url: "http://localhost:8096/api/v1/contacts/",
+	save: "rest->http://localhost:8096/api/v1/contacts/"
 });
 
-function getContacts(){
+function getContacts() {
 	return data;
 }
 
-function getContactItem(id){
+function getContactItem(id) {
 	return data.getItem(id);
 }
 
-function addContact(obj){
+function addContact(obj) {
 	data.add(obj);
 }
 
-function editContact(id, obj){
-	data.update(id, obj);
+function editContact(id, obj) {
+	data.updateItem(id, obj);
 }
 
-function removeContact(id){
+function removeContact(id) {
 	data.remove(id);
 }
 
-function getContactOptions(){
-	var options = [];
-	
-	return data.waitData.then(function(){
-		data.data.each(function(obj){
-			options.push({id:obj.id, value: (obj.FirstName + obj.LastName || obj.Email)});
+function getContactOptions() {
+	let options = [];
+
+	return data.waitData.then(() => {
+		data.data.each((obj) => {
+			options.push({id: obj.id, value: ( obj.FirstName + obj.LastName || obj.Email)});
 		});
 		return options;
 	});
-
-	
 }
 
-export { getContacts, getContactItem, addContact, editContact, removeContact, getContactOptions};
+export {getContacts, getContactItem, addContact, editContact, removeContact, getContactOptions};

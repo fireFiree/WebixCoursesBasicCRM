@@ -1,33 +1,33 @@
-var types = new webix.DataCollection({
-	url:"http://localhost:8096/api/v1/activitytypes/",
-	save:"rest->http://localhost:8096/api/v1/activitytypes/"
+let types = new webix.DataCollection({
+	url: "http://localhost:8096/api/v1/activitytypes/",
+	save: "rest->http://localhost:8096/api/v1/activitytypes/"
 });
 
-function getTypes(){
+function getTypes() {
 	return types;
 }
 
-function getTypeItem(id){
+function getTypeItem(id) {
 	return types.getItem(id);
 }
 
-function addType(obj){
+function addType(obj) {
 	types.add(obj);
 }
 
-function editType(id, obj){
-	types.update(id, obj);
+function editType(id, obj) {
+	types.updateItem(id, obj);
 }
 
-function removeType(id){
+function removeType(id) {
 	types.remove(id);
 }
 
-function getTypeOptions(){
+function getTypeOptions() {
 
-	var options = [];
+	let options = [];
 
-	return types.waitData.then(function(){
+	return types.waitData.then(() => {
 		types.data.each(function(obj){
 			options.push({id:obj.id, value: obj.Value});
 		});
@@ -36,4 +36,4 @@ function getTypeOptions(){
 
 }
 
-export { getTypes, getTypeItem, addType, editType, removeType, getTypeOptions};
+export {getTypes, getTypeItem, addType, editType, removeType, getTypeOptions};
