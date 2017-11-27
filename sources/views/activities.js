@@ -59,9 +59,8 @@ export default class ActivitiesView extends JetView {
 			view.queryView({view: "datatable"}).refreshColumns();
 		});
 		debugger;
-		//console.log(this.ui());
-		//alert(this.ui(WindowsView));
 		this.WindowsView = this.ui(WindowsView);
+		debugger;
 	}
 }
 

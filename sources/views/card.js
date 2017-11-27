@@ -3,34 +3,25 @@ import {getContactItem} from "models/contacts";
 
 
 function spanIcon(icon, text) {
-	return `<span class='webix_icon fa-${  icon} info'></span>${ text}<br/>`;
+	return `<span class='webix_icon fa-${icon} info'></span>${text}<br/>`;
 }
 
 function contactDetailsToHtml(obj) {
-	let html = `<div class='column'><p><b class='bigText'>${ obj.FirstName} ${ obj.LastName}</b></p><img src='${ obj.Photo}' style='width:200px; height:300px;'/><br/>Status: ${ obj.StatusID}</div><div class='columns'><p></p><p></p>`;
-	if (obj.Skype)
-		{html += spanIcon("skype", obj.Skype);}
-	if (obj.Website)
-		{html += spanIcon("globe", obj.Website);}
-	if (obj.Email)
-		{html += spanIcon("envelope", obj.Email);}
-	if (obj.Phone)
-		{html += spanIcon("phone", obj.Phone);}
-	if (obj.Company)
-		{html += spanIcon("building", obj.Company);}
-	if (obj.Job)
-		{html += spanIcon("universal-access", obj.Job);}
-	if (obj.Birthday)
-		{html += spanIcon("birthday-cake", obj.Birthday);}
+	let html = `<div class='column'><p><b class='bigText'>${obj.FirstName} ${obj.LastName}</b></p><img src='${obj.Photo}' style='width:170px; height:250px;'/><br/>Status: ${obj.StatusID}</div><div class='columns'><p></p><p></p>`;
+	if (obj.Skype) { html += spanIcon("skype", obj.Skype); }
+	if (obj.Website) { html += spanIcon("globe", obj.Website); }
+	if (obj.Email) { html += spanIcon("envelope", obj.Email); }
+	if (obj.Phone) { html += spanIcon("phone", obj.Phone); }
+	if (obj.Company) { html += spanIcon("building", obj.Company); }
+	if (obj.Job) { html += spanIcon("universal-access", obj.Job); }
+	if (obj.Birthday) { html += spanIcon("birthday-cake", obj.Birthday); }
 
-	return `${ html}</div>`;
+	return `${html}</div>`;
 }
 let conctactDescription = {view: "template",
 	id: "contactDescription",
 	borderless: true,
-	template:( obj) => {
-		return contactDetailsToHtml(obj);
-	}
+	template: obj => contactDetailsToHtml(obj)
 };
 
 let buttons = {cols: [
@@ -46,7 +37,6 @@ export default class CardView extends JetView {
 	init() {
 
 	}
-
 	urlChange(view, url) {
 		let id = url[0].params.id;
 		if (id) {

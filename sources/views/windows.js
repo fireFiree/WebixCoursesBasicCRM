@@ -1,13 +1,19 @@
 import {JetView} from "webix-jet";
-import {getContactOptions} from "models/contacts";
-import {getTypeOptions} from "models/activityTypes";
+import {getContacts} from "models/contacts";
+import {getTypes} from "models/activityTypes";
 import {activityAction, getActivityItem} from "models/activities";
 
+function contactName(obj) {
+	let fullName = `${obj.FirstName} ${obj.LastName}`;
+	if (fullName == " ") { return obj.Email; }
+
+	return `${obj.FirstName} ${obj.LastName}`;
+}
 
 export default class WindowsView extends JetView {
 	config() {
 		const form = {
-			id: "form",
+			// id: "form",
 			view: "form",
 			borderless: true,
 			width: 400,
@@ -18,7 +24,8 @@ export default class WindowsView extends JetView {
 					name: "TypeID",
 					options: {
 						body: {
-							data: getTypeOptions()
+							data: getTypes(),
+							template: "#Value#"
 						}
 					}
 				},
@@ -27,7 +34,8 @@ export default class WindowsView extends JetView {
 					name: "ContactID",
 					options: {
 						body: {
-							data: getContactOptions()
+							data: getContacts(),
+							template: contactName
 						}
 					}},
 				{view: "datepicker", label: "Date", timepicker: true, name: "DueDate", format: "%d-%m-%Y"},
@@ -56,22 +64,24 @@ export default class WindowsView extends JetView {
 
 	showWindow(id) {
 		this.getRoot().show();
+		let form = this.getRoot().queryView({view: "form"});
+		form.clear();
 
 		if (id !== undefined) {
-			$$("form").setValues(getActivityItem(id.row));
+			form.setValues(getActivityItem(id.row));
 		}
 	}
 
 	saveActivity() {
-		let form = $$("form");
+		let form = this.getRoot().queryView({view: "form"});
 		if (form.validate()) {
 			let item = form.getValues();
 			activityAction(item.id, item);
-			this.getTopParentView().hide();
+			this.getRoot().hide();
 		}
 	}
 
 	closeWindow() {
-		this.getTopParentView().hide();
+		this.getRoot().hide();
 	}
 }

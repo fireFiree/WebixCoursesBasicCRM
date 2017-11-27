@@ -24,16 +24,14 @@ function removeType(id) {
 }
 
 function getTypeOptions() {
-
 	let options = [];
 
 	return types.waitData.then(() => {
-		types.data.each(function(obj){
-			options.push({id:obj.id, value: obj.Value});
+		types.data.each((obj) => {
+			options.push({id: obj.id, value: obj.Value});
 		});
 		return options;
 	});
-
 }
 
 export {getTypes, getTypeItem, addType, editType, removeType, getTypeOptions};
