@@ -12,7 +12,4 @@ export default class SettingsView extends JetView {
 		return ui;
 	}
 
-	init(view) {
-		// view.parse(data);
-	}
 }

@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
-import {getContactItem} from "models/contacts";
+import {contacts} from "models/contacts";
+import TabView from "views/tabview";
 
 
 function spanIcon(icon, text) {
@@ -32,15 +33,16 @@ let buttons = {cols: [
 
 export default class CardView extends JetView {
 	config() {
-		return {cols: [conctactDescription, {rows: [buttons, {}]}]};
+		return {rows: [
+			{cols: [conctactDescription, {rows: [buttons, {}]}]},
+			TabView
+		]};
 	}
-	init() {
 
-	}
 	urlChange(view, url) {
 		let id = url[0].params.id;
 		if (id) {
-			view.queryView({view: "template"}).setValues(getContactItem(id));
+			$$("contactDescription").setValues(contacts.getItem(id));
 		}
 	}
 }

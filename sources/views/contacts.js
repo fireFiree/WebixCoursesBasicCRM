@@ -1,13 +1,18 @@
 import {JetView} from "webix-jet";
-import {getContacts} from "models/contacts";
+import {contacts} from "models/contacts";
 
 
 export default class ContactsView extends JetView {
 	config() {
 		function listTemplate(obj) {
-			return `<img src='${ obj.Photo}' class='round'/><div class='shortDescription'><b>${ obj.FirstName} ${ obj.LastName}</b><br/>${obj.Email}</div>`;
+			return `<img src='${obj.Photo}' class='round'/><div class='shortDescription'><b>${obj.FirstName} ${obj.LastName}</b><br/>${obj.Email}</div>`;
 		}
+		const addBtn = {view: "button",
+			label: "Add Contact",
+			type: "iconButton",
+			icon: "plus-square"
 
+		};
 		let contactsList = {view: "list",
 			id: "contactsList",
 			borderless: true,
@@ -17,21 +22,22 @@ export default class ContactsView extends JetView {
 			select: true,
 			on: {
 				onSelectChange: (id) => {
-					this.show(`./card?id=${ id}`);
+					this.show(`./card?id=${id}`);
 				}
 			}
 		};
 
-		let ui = {cols: [contactsList, {$subview: true}]};
+		let ui = {cols: [
+			{rows: [contactsList, addBtn]}, {$subview: true}]};
 
 		return ui;
 	}
-	init(view) {
-		let list = view.queryView({view: "list"});
-		list.parse(getContacts());
+	init() {
+		let list = $$("contactsList");
+		list.parse(contacts);
 
-		getContacts().waitData.then(() => {
-			list.select( list.getFirstId());
+		contacts.waitData.then(() => {
+			list.select(list.getFirstId());
 		});
 	}
 }
