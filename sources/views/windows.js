@@ -6,15 +6,17 @@ import {activities} from "models/activities";
 
 export default class WindowsView extends JetView {
 	config() {
+
+		const _ = this.app.getService("locale")._;
 		const form = {
 			view: "form",
 			id: "window:form",
 			borderless: true,
 			width: 400,
 			elements: [
-				{view: "textarea", label: "Details", name: "Details"},
+				{view: "textarea", label: _("Details"), name: "Details"},
 				{view: "richselect",
-					label: "Type",
+					label: _("Type"),
 					name: "TypeID",
 					options: {
 						body: {
@@ -24,7 +26,7 @@ export default class WindowsView extends JetView {
 					}
 				},
 				{view: "richselect",
-					label: "Contact",
+					label: _("Contact"),
 					name: "ContactID",
 					options: {
 						body: {
@@ -32,11 +34,11 @@ export default class WindowsView extends JetView {
 							template: getContactNameOrEmail
 						}
 					}},
-				{view: "datepicker", label: "Date", timepicker: true, name: "DueDate", format: "%d-%m-%Y"},
-				{view: "checkbox", label: " Completed", name: "State", checkValue: "Close", uncheckedValue: "Open"},
+				{view: "datepicker", label: _("Date"), timepicker: true, name: "DueDate", format: "%d-%m-%Y"},
+				{view: "checkbox", label: _("Completed"), name: "State", checkValue: "Close", uncheckedValue: "Open"},
 				{cols: [{},
-					{view: "button", value: "Save", click: () => this.saveActivity()},
-					{view: "button", value: "Cancel", click: () => this.closeWindow()}]}
+					{view: "button", value: _("Save"), click: () => this.saveActivity()},
+					{view: "button", value: _("Cancel"), click: () => this.closeWindow()}]}
 			],
 			rules: {
 				TypeID: webix.rules.isNotEmpty,
@@ -47,7 +49,7 @@ export default class WindowsView extends JetView {
 			view: "window",
 			position: "center",
 			modal: true,
-			head: "Activity",
+			head: _("Activity"),
 			body: form
 		};
 

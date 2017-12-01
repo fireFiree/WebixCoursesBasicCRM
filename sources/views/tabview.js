@@ -7,6 +7,8 @@ import {getTypeOptions} from "models/activityTypes";
 
 export default class TabView extends JetView {
 	config() {
+
+		const _ = this.app.getService("locale")._;
 		const activitiesTable = {view: "datatable",
 			id: "tabview:activitiesTable",
 			scrollX: false,
@@ -44,11 +46,11 @@ export default class TabView extends JetView {
 			view: "tabview",
 			cells: [
 				{
-					header: "Activities",
+					header: _("Activities"),
 					body: activitiesTable
 				},
 				{
-					header: "Files",
+					header: _("Files"),
 					body: filesTable
 				}
 			]

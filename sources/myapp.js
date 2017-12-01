@@ -1,5 +1,5 @@
 import "./styles/app.css";
-import {JetApp} from "webix-jet";
+import {JetApp, plugins} from "webix-jet";
 
 webix.ready(() => {
 	webix.i18n.parseFormat = "%d-%m-%Y";
@@ -10,6 +10,7 @@ webix.ready(() => {
 		start:	"/top/contacts"
 	});
 	app.render();
+	app.use(plugins.Locale);
 
 	app.attachEvent("app:error:resolve", (name, error) => {
 		window.console.error(error);

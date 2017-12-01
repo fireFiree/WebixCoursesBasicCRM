@@ -6,7 +6,9 @@ import {statuses} from "models/statuses";
 
 export default class FormView extends JetView {
 	config() {
-		const header = {view: "label", label: " Save Contact", css: "bigText"};
+
+		const _ = this.app.getService("locale")._;
+		const header = {view: "label", label: _("SaveContact"), css: "bigText"};
 
 		const form = {
 			view: "form",
@@ -14,11 +16,11 @@ export default class FormView extends JetView {
 			borderless: true,
 			cols: [
 				{rows: [
-					{view: "text", label: "First Name", name: "FirstName"},
-					{view: "text", label: "last Name", name: "LastName"},
-					{view: "datepicker", label: "Joining Date", stringResult: true, timepicker: true, name: "StartDate", format: "%d-%m-%Y"},
+					{view: "text", label: _("FirstName"), name: "FirstName"},
+					{view: "text", label: _("LastName"), name: "LastName"},
+					{view: "datepicker", label: _("StartDate"), stringResult: true, timepicker: true, name: "StartDate", format: "%d-%m-%Y"},
 					{view: "richselect",
-						label: "Status",
+						label: _("Status"),
 						name: "StatusID",
 						options: {
 							body: {
@@ -27,16 +29,16 @@ export default class FormView extends JetView {
 							}
 						}
 					},
-					{view: "text", label: "Job", name: "Job"},
-					{view: "text", label: "Company", name: "Company"},
-					{view: "text", label: "Website", name: "Website"},
-					{view: "textarea", label: "Address", name: "Address"}
+					{view: "text", label: _("Job"), name: "Job"},
+					{view: "text", label: _("Company"), name: "Company"},
+					{view: "text", label: _("Website"), name: "Website"},
+					{view: "textarea", label: _("Address"), name: "Address"}
 				]},
 				{rows: [
 					{view: "text", label: "Email", name: "Email"},
 					{view: "text", label: "Skype", name: "Skype"},
-					{view: "text", label: "Phone", name: "Phone"},
-					{view: "datepicker", label: "Birthday", name: "Birthday", stringResult: true, format: "%d-%m-%Y"}
+					{view: "text", label: _("Phone"), name: "Phone"},
+					{view: "datepicker", label: _("BirthDay"), name: "Birthday", stringResult: true, format: "%d-%m-%Y"}
 				]}
 			],
 			rules: {
@@ -44,7 +46,7 @@ export default class FormView extends JetView {
 			}
 		};
 		const saveBtn = {view: "button",
-			label: "Save Contact",
+			label: _("SaveContact"),
 			type: "iconButton",
 			icon: "plus-square",
 			click: () => {
@@ -63,7 +65,7 @@ export default class FormView extends JetView {
 		};
 
 		const cancelBtn = {view: "button",
-			label: "Cancel",
+			label: _("Cancel"),
 			type: "iconButton",
 			icon: "ban",
 			click: () => {

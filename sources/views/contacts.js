@@ -10,8 +10,10 @@ export default class ContactsView extends JetView {
 			return `<img src='${obj.Photo}' class='round'/><div class='shortDescription'><b>${obj.FirstName} ${obj.LastName}</b><br/>${obj.Email}</div>`;
 		}
 
+		const _ = this.app.getService("locale")._;
+
 		const addBtn = {view: "button",
-			label: "Add Contact",
+			label: _("AddContact"),
 			type: "iconButton",
 			icon: "plus-square",
 			click: () => {
@@ -42,7 +44,6 @@ export default class ContactsView extends JetView {
 	}
 	init(view, url) {
 		let list = $$("contactsList");
-		debugger;
 		contacts.waitData.then(() => {
 			list.parse(contacts);
 			let id = list.getFirstId();
