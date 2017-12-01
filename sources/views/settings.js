@@ -2,7 +2,6 @@ import {JetView} from "webix-jet";
 
 export default class SettingsView extends JetView {
 	config() {
-
 		let header = {view: "label", label: "Settings", css: "center"};
 
 		let settings = {view: "select", label: "Language", options: ["English", "Русский"]};
@@ -10,9 +9,5 @@ export default class SettingsView extends JetView {
 		let ui = {rows: [header, settings, {}]};
 
 		return ui;
-	}
-
-	init(view) {
-		// view.parse(data);
 	}
 }

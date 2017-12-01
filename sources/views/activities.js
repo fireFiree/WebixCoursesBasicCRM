@@ -1,5 +1,5 @@
 import {JetView} from "webix-jet";
-import {getActivities, removeActivity} from "models/activities";
+import {activities} from "models/activities";
 import {getContactOptions} from "models/contacts";
 import {getTypeOptions} from "models/activityTypes";
 import WindowsView from "views/windows";
@@ -7,12 +7,13 @@ import WindowsView from "views/windows";
 export default class ActivitiesView extends JetView {
 	config() {
 		const dataTable = {view: "datatable",
+			id: "activities:activitiesTable",
 			columns: [
 				{id: "State", 	header: "",	template: "{common.checkbox()}", checkValue: "Close", uncheckedValue: "Open", width: 30},
 				{id: "TypeID", 	header: ["Activities Type", {content: "selectFilter"}], width: 150, sort: "text"},
-				{id: "DueDate", header: ["Due Date", {content: "dateFilter"}], sort: "text", width: 100},
-				{id: "Details", header: ["Details", {content: "textFilter"}], fillspace: true, sort: "text"},
-				{id: "ContactID", header: ["Contact", {content: "selectFilter"}], sort: "text", width: 200},
+				{id: "DueDate", header: ["Due Date", {content: "dateFilter"}], stringResult: true, sort: "text", width: 100},
+				{id: "Details", header: ["Details", {content: "textFilter"}], fillspace: true, minWidth: 300, sort: "text"},
+				{id: "ContactID", header: ["Contact", {content: "selectFilter"}], sort: "text", width: 250},
 				{id: "editCell", 	header: "", 	template: "<span class='webix_icon fa-edit'></span>", width: 40},
 				{id: "deleteCell", 	header: "", 	template: "<span class='webix_icon fa-trash-o'></span>", width: 40}
 			],
@@ -24,7 +25,7 @@ export default class ActivitiesView extends JetView {
 						cancel: "Cancel",
 						callback: (res) => {
 							if (res) {
-								removeActivity(id);
+								activities.remove(id);
 							}
 						}
 					});
@@ -46,21 +47,21 @@ export default class ActivitiesView extends JetView {
 
 		return ui;
 	}
-	init(view) {
-		view.queryView({view: "datatable"}).parse(getActivities());
+	init() {
+		let activitiesTable = $$("activities:activitiesTable");
+		activitiesTable.parse(activities);
 
 		getContactOptions().then((options) => {
-			view.queryView({view: "datatable"}).getColumnConfig("ContactID").collection = options;
-			view.queryView({view: "datatable"}).refreshColumns();
+			activitiesTable.getColumnConfig("ContactID").collection = options;
+			activitiesTable.refreshColumns();
 		});
 
 		getTypeOptions().then((options) => {
-			view.queryView({view: "datatable"}).getColumnConfig("TypeID").collection = options;
-			view.queryView({view: "datatable"}).refreshColumns();
+			activitiesTable.getColumnConfig("TypeID").collection = options;
+			activitiesTable.refreshColumns();
 		});
-		debugger;
+
 		this.WindowsView = this.ui(WindowsView);
-		debugger;
 	}
 }
 

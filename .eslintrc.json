@@ -3,28 +3,18 @@
         "browser": true,
         "es6": true
     },
-    "globals":{
-        "webix":true,
-        "scheduler":true,
-        "APPNAME":true, "VERSION":true, "PRODUCTION":true
+    "globals": {
+        "webix": true,
+        "$$": true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "sourceType": "module"
-    },
+    "extends": "./node_modules/eslint-xbsoftware/1__double_quotes_and_tabs/.eslintrc",
     "rules": {
-        "indent": [
-            "error",
-            "tab",
-            {"SwitchCase":1}
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    }
+        "no-extra-parens": "warn",
+        "valid-jsdoc": "warn",
+        "class-methods-use-this": "off", 
+        "no-param-reassign": "off"
+    },
+	"plugins":[
+		"import"
+	]
 }

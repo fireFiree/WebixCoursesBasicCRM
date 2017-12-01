@@ -1,7 +1,11 @@
 import {JetView} from "webix-jet";
-import {getContactItem} from "models/contacts";
+import {contacts} from "models/contacts";
+import TabView from "views/tabview";
+import {activities} from "models/activities";
 
+function filter(data) {
 
+}
 function spanIcon(icon, text) {
 	return `<span class='webix_icon fa-${icon} info'></span>${text}<br/>`;
 }
@@ -18,29 +22,61 @@ function contactDetailsToHtml(obj) {
 
 	return `${html}</div>`;
 }
-let conctactDescription = {view: "template",
-	id: "contactDescription",
-	borderless: true,
-	template: obj => contactDetailsToHtml(obj)
-};
-
-let buttons = {cols: [
-	{view: "button", type: "icon", icon: "edit", label: "Edit", width: 130},
-	{view: "button", label: "Delete", type: "icon", icon: "trash-o", width: 130}
-]};
 
 
 export default class CardView extends JetView {
 	config() {
-		return {cols: [conctactDescription, {rows: [buttons, {}]}]};
-	}
-	init() {
+		let conctactDescription = {view: "template",
+			id: "contactDescription",
+			borderless: true,
+			template: obj => contactDetailsToHtml(obj)
+		};
 
+		let buttons = {cols: [
+			{view: "button",
+				type: "icon",
+				icon: "edit",
+				label: "Edit",
+				width: 130,
+				click: () => {
+					let id = contacts.getCursor();
+					this.app.show(`/top/contacts/form?id=${id}`);
+				}
+			},
+			{view: "button",
+				label: "Delete",
+				type: "icon",
+				icon: "trash-o",
+				width: 130,
+				click: () => {
+					let id = contacts.getCursor();
+					if (id) {
+						webix.confirm({
+							text: "Are you sure?",
+							ok: "Yes",
+							cancel: "Cancel",
+							callback: (res) => {
+								if (res) {
+									contacts.remove(id);
+									id = contacts.getFirstId();
+									this.app.show(`/top/contacts/card?id=${id}`);
+								}
+							}
+						});
+					}
+				}
+			}
+		]};
+
+		return {rows: [
+			{cols: [conctactDescription, {rows: [buttons, {}]}]},
+			TabView
+		]};
 	}
 	urlChange(view, url) {
 		let id = url[0].params.id;
 		if (id) {
-			view.queryView({view: "template"}).setValues(getContactItem(id));
+			$$("contactDescription").setValues(contacts.getItem(id));
 		}
 	}
 }
