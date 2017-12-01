@@ -15,7 +15,6 @@ export default class ContactsView extends JetView {
 			type: "iconButton",
 			icon: "plus-square",
 			click: () => {
-				contacts.setCursor(null);
 				this.show("./form");
 			}
 		};
@@ -43,7 +42,7 @@ export default class ContactsView extends JetView {
 	}
 	init(view, url) {
 		let list = $$("contactsList");
-
+		debugger;
 		contacts.waitData.then(() => {
 			list.parse(contacts);
 			let id = list.getFirstId();

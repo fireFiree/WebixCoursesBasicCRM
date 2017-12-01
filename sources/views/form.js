@@ -49,7 +49,7 @@ export default class FormView extends JetView {
 			icon: "plus-square",
 			click: () => {
 				let item = $$("form:form").getValues();
-				if (contacts.getCursor() === null) {
+				if (item.id === undefined) {
 					let id = contacts.getLastId() + 1;
 					item.id = id;
 					contacts.add(item);
@@ -58,7 +58,7 @@ export default class FormView extends JetView {
 					contacts.updateItem(item.id, item);
 					$$("form:form").clear();
 				}
-				this.show(`../card?id=${item.id}`);
+				this.show(`./../card?id=${item.id}`);
 			}
 		};
 
@@ -69,7 +69,7 @@ export default class FormView extends JetView {
 			click: () => {
 				let id = contacts.getCursor() || contacts.getFirstId();
 
-				this.show(`../card?id=${id}`);
+				this.show(`./../card?id=${id}`);
 			}
 		};
 

@@ -56,7 +56,7 @@ export default class TabView extends JetView {
 
 		return tabview;
 	}
-	init(view) {
+	init() {
 		let activitiesTable = $$("tabview:activitiesTable");
 		activitiesTable.sync(activities, () => {
 			$$("tabview:activitiesTable").filter("#ContactID#", contacts.getCursor(), true);
@@ -69,15 +69,13 @@ export default class TabView extends JetView {
 
 		this.WindowsView = this.ui(WindowsView);
 
-		activitiesTable.data.attachEvent("onAfterFilter", function () {
-			// debugger;
-			console.log(contacts.getCursor());
+		activitiesTable.data.attachEvent("onAfterFilter", function() {
 			this.blockEvent();
 			this.filter("#ContactID#", contacts.getCursor(), true);
 			this.unblockEvent();
 		});
 	}
-	urlChange(view, url) {
+	urlChange() {
 		$$("tabview:activitiesTable").filterByAll();
 	}
 }

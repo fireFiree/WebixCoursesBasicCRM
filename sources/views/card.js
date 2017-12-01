@@ -3,9 +3,6 @@ import {contacts} from "models/contacts";
 import TabView from "views/tabview";
 import {activities} from "models/activities";
 
-function filter(data) {
-
-}
 function spanIcon(icon, text) {
 	return `<span class='webix_icon fa-${icon} info'></span>${text}<br/>`;
 }
@@ -59,7 +56,7 @@ export default class CardView extends JetView {
 								if (res) {
 									contacts.remove(id);
 									id = contacts.getFirstId();
-									this.app.show(`/top/contacts/card?id=${id}`);
+									this.show(`./../card?id=${id}`);
 								}
 							}
 						});

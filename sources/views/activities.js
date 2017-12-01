@@ -37,13 +37,14 @@ export default class ActivitiesView extends JetView {
 		const addBtn = {view: "button",
 			label: "Add Activity",
 			type: "icon",
+			width: 150,
 			icon: "plus-square",
 			click: () => {
 				this.WindowsView.showWindow();
 			}
 		};
 
-		const ui = {rows: [addBtn, dataTable]};
+		const ui = {rows: [{cols: [{}, addBtn]}, dataTable]};
 
 		return ui;
 	}

@@ -8,6 +8,7 @@ export default class WindowsView extends JetView {
 	config() {
 		const form = {
 			view: "form",
+			id: "window:form",
 			borderless: true,
 			width: 400,
 			elements: [
@@ -55,7 +56,7 @@ export default class WindowsView extends JetView {
 
 	showWindow(id) {
 		this.getRoot().show();
-		let form = this.getRoot().queryView({view: "form"});
+		let form = $$("window:form");
 		form.clear();
 
 		if (id !== undefined) {
@@ -64,7 +65,7 @@ export default class WindowsView extends JetView {
 	}
 
 	saveActivity() {
-		let form = this.getRoot().queryView({view: "form"});
+		let form = $$("window:form");
 		if (form.validate()) {
 			let obj = form.getValues();
 			if (obj.id === undefined) { activities.add(obj); }
