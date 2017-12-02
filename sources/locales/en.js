@@ -27,6 +27,12 @@ export default {
 	Save: "Save",
 	Type: "Type",
 	Date: "Date",
-    Completed: "Completed",
-    Activity: "ACtivity"
+	Completed: "Completed",
+	Activity: "Activity",
+	EditContact: "Edit Contact",
+	SearchContact: "Search Contacts",
+	AreYouSure: "Are you sure?",
+	Yes: "Yes",
+	EditActivity: "Edit Activity",
+	UploadImage: "Upload Image"
 };

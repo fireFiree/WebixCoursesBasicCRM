@@ -6,14 +6,17 @@ import {activities} from "models/activities";
 
 export default class WindowsView extends JetView {
 	config() {
-
 		const _ = this.app.getService("locale")._;
 		const form = {
 			view: "form",
 			id: "window:form",
 			borderless: true,
 			width: 400,
+			elementsConfig: {
+				labelWidth: 100
+			},
 			elements: [
+				
 				{view: "textarea", label: _("Details"), name: "Details"},
 				{view: "richselect",
 					label: _("Type"),
@@ -49,7 +52,7 @@ export default class WindowsView extends JetView {
 			view: "window",
 			position: "center",
 			modal: true,
-			head: _("Activity"),
+			head: {view: "template", template: _("AddActivity"), type: "header"},
 			body: form
 		};
 
@@ -57,12 +60,22 @@ export default class WindowsView extends JetView {
 	}
 
 	showWindow(id) {
+		const _ = this.app.getService("locale")._;
+
 		this.getRoot().show();
 		let form = $$("window:form");
+		let popup = $$("popup");
 		form.clear();
+		form.clearValidation();
 
 		if (id !== undefined) {
+			popup.queryView({type: "header"}).define("template", _("EditActivity"));
+			popup.queryView({type: "header"}).refresh();
 			form.setValues(activities.getItem(id.row));
+		}
+		else {
+			popup.queryView({type: "header"}).define("template", _("AddActivity"));
+			popup.queryView({type: "header"}).refresh();
 		}
 	}
 

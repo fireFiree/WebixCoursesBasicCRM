@@ -23,12 +23,11 @@ function contactDetailsToHtml(obj) {
 
 export default class CardView extends JetView {
 	config() {
-
 		const _ = this.app.getService("locale")._;
 		let conctactDescription = {view: "template",
 			id: "contactDescription",
 			borderless: true,
-			template: obj => contactDetailsToHtml(obj)
+			template: contactDetailsToHtml
 		};
 
 		let buttons = {cols: [
@@ -39,7 +38,7 @@ export default class CardView extends JetView {
 				width: 130,
 				click: () => {
 					let id = contacts.getCursor();
-					this.app.show(`/top/contacts/form?id=${id}`);
+					this.show(`./../form?id=${id}`);
 				}
 			},
 			{view: "button",
@@ -51,9 +50,9 @@ export default class CardView extends JetView {
 					let id = contacts.getCursor();
 					if (id) {
 						webix.confirm({
-							text: "Are you sure?",
-							ok: "Yes",
-							cancel: "Cancel",
+							text: _("AreYouSure"),
+							ok: _("Yes"),
+							cancel: _("Cancel"),
 							callback: (res) => {
 								if (res) {
 									contacts.remove(id);

@@ -6,6 +6,20 @@ import {getTypeOptions} from "models/activityTypes";
 
 export default class ContactsView extends JetView {
 	config() {
+		function contactListFilter(obj, value) {
+			let filter = false;
+			for (let prop in obj) {
+				if (typeof obj[prop] === "string") {
+					if (obj[prop].toLowerCase().indexOf(value) == 0) { filter = true; }
+				}
+				else if (typeof obj[prop] === "number") {
+					if (`${obj[prop]}`.toLowerCase().indexOf(value) == 0) { filter = true; }
+				}
+			}
+
+			return filter;
+		}
+
 		function listTemplate(obj) {
 			return `<img src='${obj.Photo}' class='round'/><div class='shortDescription'><b>${obj.FirstName} ${obj.LastName}</b><br/>${obj.Email}</div>`;
 		}
@@ -21,7 +35,14 @@ export default class ContactsView extends JetView {
 			}
 		};
 
-
+		let search = {view: "text",
+			placeholder: _("SearchContact"),
+			on: {
+				onTimedKeyPress() {
+					let value = this.getValue().toLowerCase();
+					$$("contactsList").filter(obj => contactListFilter(obj, value));
+				}
+			}};
 		let contactsList = {view: "list",
 			id: "contactsList",
 			borderless: true,
@@ -38,7 +59,7 @@ export default class ContactsView extends JetView {
 		};
 
 		let ui = {cols: [
-			{rows: [contactsList, addBtn]}, {$subview: true}]};
+			{rows: [search, contactsList, addBtn]}, {$subview: true}]};
 
 		return ui;
 	}

@@ -1,5 +1,10 @@
 import {JetView, plugins} from "webix-jet";
 
+function setHeader(){
+	
+}
+
+
 export default class TopView extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
@@ -13,10 +18,17 @@ export default class TopView extends JetView {
 			select: true,
 			template: "<span class='webix_icon fa-#icon#'></span> #value# ",
 			data: [
-				{value: _("Contacts"), 	id: "contacts", icon: "users"},
+				{value: _("Contacts"), 		id: "contacts", 	icon: "users"},
 				{value: _("Activities"),	id: "activities",	icon: "calendar"},
-				{value: _("Settings"), 	id: "settings", 		icon: "cogs"}
-			]
+				{value: _("Settings"), 		id: "settings", 	icon: "cogs"}
+			],
+			on: {
+				onSelectChange: () => {
+					let item = $$("top:menu").getSelectedItem();
+					$$("header").config.template = webix.template(item.value);
+					$$("header").refresh();
+				}
+			}
 		};
 
 		let ui = {
@@ -45,10 +57,5 @@ export default class TopView extends JetView {
 	}
 	init() {
 		this.use(plugins.Menu, "top:menu");
-	}
-
-	urlChange(view, url) {
-		$$("header").config.template = webix.template(url[1].page);
-		$$("header").refresh();
 	}
 }

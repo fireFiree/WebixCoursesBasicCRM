@@ -22,7 +22,7 @@ export default class ActivitiesView extends JetView {
 			onClick: {
 				"fa-trash-o": (ev, id) => {
 					webix.confirm({
-						text: _("AreYouSure?"),
+						text: _("AreYouSure"),
 						ok: _("Yes"),
 						cancel: _("Cancel"),
 						callback: (res) => {
@@ -39,7 +39,8 @@ export default class ActivitiesView extends JetView {
 		const addBtn = {view: "button",
 			label: _("AddActivity"),
 			type: "icon",
-			width: 150,
+			autoWidth: true,
+			maxWidth: 200,
 			icon: "plus-square",
 			click: () => {
 				this.WindowsView.showWindow();

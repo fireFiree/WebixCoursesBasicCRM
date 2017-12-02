@@ -28,5 +28,11 @@ export default {
 	Type: "Тип",
 	Date: "Дата",
 	Completed: "Завершено",
-	Activity: "Мероприятие"
+	Activity: "Мероприятие",
+	EditContact: "Редактировать контакт",
+	SearchContact: "Поиск контактов",
+	AreYouSure: "Вы уверены?",
+	Yes: "Да",
+	EditActivity: "Редактировать мероприятие",
+	UploadImage: "Загрузить картинку"
 };
