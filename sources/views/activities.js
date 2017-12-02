@@ -6,8 +6,19 @@ import WindowsView from "views/windows";
 
 export default class ActivitiesView extends JetView {
 	config() {
-
 		const _ = this.app.getService("locale")._;
+
+		const filter = {view: "segmented",
+			options: [
+				{id: "all", value: _("All")},
+				{id: "overdue", value: _("Overdue")},
+				{id: "completed", value: _("Completed")},
+				{id: "today", value: _("Today")},
+				{id: "tomorrow", value: _("Tomorrow")},
+				{id: "thisweek", value: _("ThisWeek")},
+				{id: "nextweek", value: _("NextWeek")}
+			]
+		};
 		const dataTable = {view: "datatable",
 			id: "activities:activitiesTable",
 			columns: [
@@ -47,7 +58,7 @@ export default class ActivitiesView extends JetView {
 			}
 		};
 
-		const ui = {rows: [{cols: [{}, addBtn]}, dataTable]};
+		const ui = {rows: [filter, {cols: [{}, addBtn]}, dataTable]};
 
 		return ui;
 	}

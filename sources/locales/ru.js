@@ -34,5 +34,13 @@ export default {
 	AreYouSure: "Вы уверены?",
 	Yes: "Да",
 	EditActivity: "Редактировать мероприятие",
-	UploadImage: "Загрузить картинку"
+	UploadImage: "Загрузить картинку",
+	Icon: "Иконка",
+	Value: "Название",
+	Types: "Типы",
+	Statuses: "Статусы",
+	EditType: "Редактировать тип",
+	EditStatus: "Редактировать статус",
+	AddType: "Добавить тип",
+	AddStatus: "Добавить статус"
 };

@@ -34,5 +34,13 @@ export default {
 	AreYouSure: "Are you sure?",
 	Yes: "Yes",
 	EditActivity: "Edit Activity",
-	UploadImage: "Upload Image"
+	UploadImage: "Upload Image",
+	Icon: "Icon",
+	Value: "Value",
+	Types: "Types",
+	Statuses: "Statuses",
+	EditType: "Edit Type",
+	EditStatus: "Edit Status",
+	AddType: "Add Type",
+	AddStatus: "Add Status"
 };

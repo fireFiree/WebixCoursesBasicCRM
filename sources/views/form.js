@@ -27,7 +27,7 @@ export default class FormView extends JetView {
 						name: "StatusID",
 						options: {
 							body: {
-								data: types,
+								data: statuses,
 								template: "#Icon#"
 							}
 						}

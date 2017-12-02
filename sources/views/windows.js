@@ -16,7 +16,6 @@ export default class WindowsView extends JetView {
 				labelWidth: 100
 			},
 			elements: [
-				
 				{view: "textarea", label: _("Details"), name: "Details"},
 				{view: "richselect",
 					label: _("Type"),
@@ -40,7 +39,7 @@ export default class WindowsView extends JetView {
 				{view: "datepicker", label: _("Date"), timepicker: true, name: "DueDate", format: "%d-%m-%Y"},
 				{view: "checkbox", label: _("Completed"), name: "State", checkValue: "Close", uncheckedValue: "Open"},
 				{cols: [{},
-					{view: "button", value: _("Save"), click: () => this.saveActivity()},
+					{view: "button", value: _("Save"), click: () => this.saveActivity(), btn: "save"},
 					{view: "button", value: _("Cancel"), click: () => this.closeWindow()}]}
 			],
 			rules: {

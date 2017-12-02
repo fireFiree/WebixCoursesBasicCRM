@@ -13,6 +13,7 @@ webix.ready(() => {
 	app.use(plugins.Locale);
 
 	app.attachEvent("app:error:resolve", (name, error) => {
+		debugger;
 		window.console.error(error);
 	});
 });

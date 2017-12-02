@@ -7,8 +7,19 @@ import {getTypeOptions} from "models/activityTypes";
 
 export default class TabView extends JetView {
 	config() {
-
 		const _ = this.app.getService("locale")._;
+
+		const addBtn = {view: "button",
+			label: _("AddActivity"),
+			type: "icon",
+			autoWidth: true,
+			maxWidth: 200,
+			icon: "plus-square",
+			click: () => {
+				this.WindowsView.showWindow();
+			}
+		};
+
 		const activitiesTable = {view: "datatable",
 			id: "tabview:activitiesTable",
 			scrollX: false,
@@ -39,7 +50,30 @@ export default class TabView extends JetView {
 			}
 		};
 
-		const filesTable = {view: "datatable", id: "tabview:filesTable"
+		const filesTable = {view: "datatable",
+		 	id: "tabview:filesTable",
+			columns: [
+				{id: "Name", header: "Name", sort: "text", width: 200},
+				{id: "ChangingDate", header: _("ChangingDate"), fillspace: true, minWidth: 300, sort: "text"},
+				{id: "Size", header: _("Size"), fillspace: true, minWidth: 80, sort: "text"},
+				{id: "deleteCell", 	header: "", 	template: "<span class='webix_icon fa-trash-o'></span>", width: 40}
+			]
+		};
+
+		const uploader = {view: "form",
+			rows: [
+				{view: "uploader",
+					value: _("UploadFile"),
+					name: "files",
+					link: "mylist"
+				},
+				{view: "list",
+					id: "mylist",
+					type: "uploader",
+					autoheight: true,
+					borderless: true
+				}
+			]
 		};
 
 		let tabview = {
@@ -47,11 +81,13 @@ export default class TabView extends JetView {
 			cells: [
 				{
 					header: _("Activities"),
-					body: activitiesTable
+					body: {rows: [
+						activitiesTable, {cols: [{}, addBtn]}
+					]}
 				},
 				{
 					header: _("Files"),
-					body: filesTable
+					body: {rows: [filesTable, uploader]}
 				}
 			]
 		};
@@ -71,7 +107,7 @@ export default class TabView extends JetView {
 
 		this.WindowsView = this.ui(WindowsView);
 
-		activitiesTable.data.attachEvent("onAfterFilter", function() {
+		activitiesTable.data.attachEvent("onAfterFilter", function () {
 			this.blockEvent();
 			this.filter("#ContactID#", contacts.getCursor(), true);
 			this.unblockEvent();

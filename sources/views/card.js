@@ -55,7 +55,18 @@ export default class CardView extends JetView {
 							cancel: _("Cancel"),
 							callback: (res) => {
 								if (res) {
+									debugger;
+
+									/* activities.waitData.then(() => {
+										activities.data.each((obj) => {
+											if (obj.ContactID == id[0]) {
+												activities.remove(obj.id);
+											}
+										});
+										contacts.remove(id);
+									}); */
 									contacts.remove(id);
+
 									id = contacts.getFirstId();
 									this.show(`./../card?id=${id}`);
 								}

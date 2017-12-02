@@ -4,6 +4,7 @@ import WindowsView from "views/windows";
 import {getTypeOptions} from "models/activityTypes";
 
 
+
 export default class ContactsView extends JetView {
 	config() {
 		function contactListFilter(obj, value) {
@@ -54,6 +55,10 @@ export default class ContactsView extends JetView {
 				onSelectChange: (id) => {
 					contacts.setCursor(id);
 					this.show(`./card?id=${id}`);
+				},
+				onAfterFilter: () => {
+					let id = $$("contactsList").getFirstId();
+					$$("contactsList").select(id);
 				}
 			}
 		};
