@@ -50,29 +50,21 @@ export default class TabView extends JetView {
 			}
 		};
 
-		const filesTable = {view: "datatable",
-		 	id: "tabview:filesTable",
-			columns: [
-				{id: "Name", header: "Name", sort: "text", width: 200},
-				{id: "ChangingDate", header: _("ChangingDate"), fillspace: true, minWidth: 300, sort: "text"},
-				{id: "Size", header: _("Size"), fillspace: true, minWidth: 80, sort: "text"},
-				{id: "deleteCell", 	header: "", 	template: "<span class='webix_icon fa-trash-o'></span>", width: 40}
-			]
-		};
-
 		const uploader = {view: "form",
 			rows: [
-				{view: "uploader",
-					value: _("UploadFile"),
-					name: "files",
-					link: "mylist"
-				},
 				{view: "list",
 					id: "mylist",
 					type: "uploader",
 					autoheight: true,
 					borderless: true
+				},
+				{},
+				{view: "uploader",
+					value: _("UploadFile"),
+					name: "files",
+					link: "mylist"
 				}
+
 			]
 		};
 
@@ -87,7 +79,7 @@ export default class TabView extends JetView {
 				},
 				{
 					header: _("Files"),
-					body: {rows: [filesTable, uploader]}
+					body: uploader
 				}
 			]
 		};

@@ -54,19 +54,19 @@ export default class TypeView extends JetView {
 		this.getRoot().show();
 
 
-		let popup = $$("type:popup");
+		let popupHeader = $$("type:popup").queryView({type: "header"});
 		let form = $$("setting:type:form");
 		form.clear();
 		form.clearValidation();
 
 		if (id !== undefined) {
-			popup.queryView({type: "header"}).define("template", _("EditType"));
-			popup.queryView({type: "header"}).refresh();
+			popupHeader.define("template", _("EditType"));
+			popupHeader.refresh();
 			form.setValues(types.getItem(id.row));
 		}
 		else {
-			popup.queryView({type: "header"}).define("template", _("AddType"));
-			popup.queryView({type: "header"}).refresh();
+			popupHeader.define("template", _("AddType"));
+			popupHeader.refresh();
 		}
 	}
 

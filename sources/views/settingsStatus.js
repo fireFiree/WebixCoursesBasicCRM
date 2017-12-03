@@ -54,19 +54,19 @@ export default class StatusView extends JetView {
 		this.getRoot().show();
 
 
-		let popup = $$("status:popup");
+		let popupHeader = $$("status:popup").queryView({type: "header"});
 		let form = $$("setting:status:form");
 		form.clear();
 		form.clearValidation();
 
 		if (id !== undefined) {
-			popup.queryView({type: "header"}).define("template", _("EditStatus"));
-			popup.queryView({type: "header"}).refresh();
+			popupHeader.define("template", _("EditStatus"));
+			popupHeader.refresh();
 			form.setValues(statuses.getItem(id.row));
 		}
 		else {
-			popup.queryView({type: "header"}).define("template", _("AddStatus"));
-			popup.queryView({type: "header"}).refresh();
+			popupHeader.define("template", _("AddStatus"));
+			popupHeader.refresh();
 		}
 	}
 

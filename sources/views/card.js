@@ -2,13 +2,15 @@ import {JetView} from "webix-jet";
 import {contacts} from "models/contacts";
 import TabView from "views/tabview";
 import {activities} from "models/activities";
+import {statuses} from "models/statuses";
 
 function spanIcon(icon, text) {
 	return `<span class='webix_icon fa-${icon} info'></span>${text}<br/>`;
 }
 
 function contactDetailsToHtml(obj) {
-	let html = `<div class='column'><p><b class='bigText'>${obj.FirstName} ${obj.LastName}</b></p><img src='${obj.Photo}' style='width:170px; height:250px;'/><br/>Status: ${obj.StatusID}</div><div class='columns'><p></p><p></p>`;
+	// let status = statuses.waitData.then(() => statuses.data.getItem(obj.StatusID));
+	let html = `<div class='column'><p><b class='bigText'>${obj.FirstName} ${obj.LastName}</b></p><img src='${obj.Photo}' style='width:170px; height:250px;'/><br/>Status:${obj.StatusID}</div><div class='columns'><p></p><p></p>`;
 	if (obj.Skype) { html += spanIcon("skype", obj.Skype); }
 	if (obj.Website) { html += spanIcon("globe", obj.Website); }
 	if (obj.Email) { html += spanIcon("envelope", obj.Email); }
@@ -55,15 +57,13 @@ export default class CardView extends JetView {
 							cancel: _("Cancel"),
 							callback: (res) => {
 								if (res) {
-									debugger;
-
 									/* activities.waitData.then(() => {
+										let activitiesArr = [];
 										activities.data.each((obj) => {
-											if (obj.ContactID == id[0]) {
-												activities.remove(obj.id);
-											}
+											if (obj.ContactID == id) {
+												activitiesArr.push(obj.id);
+											}debugger;
 										});
-										contacts.remove(id);
 									}); */
 									contacts.remove(id);
 

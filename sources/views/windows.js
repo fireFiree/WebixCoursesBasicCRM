@@ -59,23 +59,21 @@ export default class WindowsView extends JetView {
 	}
 
 	showWindow(id) {
-		const _ = this.app.getService("locale")._;
-
+		const _ = this.app.getService("locale")._;	
 		this.getRoot().show();
 		let form = $$("window:form");
-		let popup = $$("popup");
-		form.clear();
-		form.clearValidation();
+
+		let popupHeader = $$("popup").queryView({type: "header"});
 
 		if (id !== undefined) {
-			popup.queryView({type: "header"}).define("template", _("EditActivity"));
-			popup.queryView({type: "header"}).refresh();
+			popupHeader.define("template", _("EditActivity"));
+			popupHeader.refresh();
 			form.setValues(activities.getItem(id.row));
 		}
 		else {
-			popup.queryView({type: "header"}).define("template", _("AddActivity"));
-			popup.queryView({type: "header"}).refresh();
-		}
+			popupHeader.define("template", _("AddActivity"));
+			popupHeader.refresh();
+		}	
 	}
 
 	saveActivity() {
@@ -84,6 +82,8 @@ export default class WindowsView extends JetView {
 			let obj = form.getValues();
 			if (obj.id === undefined) { activities.add(obj); }
 			else { activities.updateItem(obj.id, obj); }
+			form.clear();
+			form.clearValidation();
 			this.getRoot().hide();
 		}
 	}

@@ -46,22 +46,22 @@ export default class FormView extends JetView {
 					{rows: [
 						{template: "Preview", id: "preview", autoWidth: true, height: 250},
 						{
-						  view: "uploader",
-						  value: _("UploadImage"),
-						  accept: "image/png, image/gif, image/jpg",
-						  on: {
-							  onBeforeFileAdd(file) {
-							  let reader = new FileReader();
-							  reader.onload = function (e) {
+						  	view: "uploader",
+						  	value: _("UploadImage"),
+						  	accept: "image/png, image/gif, image/jpg",
+						  	on: {
+							  	onBeforeFileAdd(file) {
+							  	let reader = new FileReader();
+							 	 reader.onload = function (e) {
 										let url = e.target.result;
 										$$("preview").setHTML(`<img class='webix_ssheet_cimage preview' src='${url}'></img>`);
-							  };
-							  reader.readAsDataURL(file.file);
-							  return false;
+							  	};
+							  	reader.readAsDataURL(file.file);
+							  	return false;
 								}
 						  }
 						}
-					  ]}
+					]}
 				]}
 			],
 			rules: {

@@ -4,19 +4,14 @@ import WindowsView from "views/windows";
 import {getTypeOptions} from "models/activityTypes";
 
 
-
 export default class ContactsView extends JetView {
 	config() {
 		function contactListFilter(obj, value) {
 			let filter = false;
 			for (let prop in obj) {
-				if (typeof obj[prop] === "string") {
-					if (obj[prop].toLowerCase().indexOf(value) == 0) { filter = true; }
-				}
-				else if (typeof obj[prop] === "number") {
-					if (`${obj[prop]}`.toLowerCase().indexOf(value) == 0) { filter = true; }
-				}
+				if (obj[prop].toString().toLowerCase().indexOf(value) != -1) { filter = true; }
 			}
+
 
 			return filter;
 		}
