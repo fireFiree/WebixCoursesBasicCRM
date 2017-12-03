@@ -1,6 +1,6 @@
 import {JetView} from "webix-jet";
 import {activities} from "models/activities";
-import {getContactOptions} from "models/contacts";
+import {getContactOptions, contacts} from "models/contacts";
 import {getTypeOptions} from "models/activityTypes";
 import WindowsView from "views/windows";
 
@@ -67,6 +67,7 @@ export default class ActivitiesView extends JetView {
 		return ui;
 	}
 	init() {
+		contacts.setCursor(null);
 		let activitiesTable = $$("activities:activitiesTable");
 		activitiesTable.parse(activities);
 

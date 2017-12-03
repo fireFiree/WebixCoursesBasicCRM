@@ -2,8 +2,6 @@ import "./styles/app.css";
 import {JetApp, plugins} from "webix-jet";
 
 webix.ready(() => {
-	webix.i18n.parseFormat = "%d-%m-%Y";
-	webix.i18n.setLocale();
 	let app = new JetApp({
 		id:			APPNAME,
 		version:	VERSION,
@@ -13,7 +11,6 @@ webix.ready(() => {
 	app.use(plugins.Locale);
 
 	app.attachEvent("app:error:resolve", (name, error) => {
-		debugger;
 		window.console.error(error);
 	});
 });

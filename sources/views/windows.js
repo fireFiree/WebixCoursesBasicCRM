@@ -9,7 +9,8 @@ export default class WindowsView extends JetView {
 		const _ = this.app.getService("locale")._;
 		const form = {
 			view: "form",
-			id: "window:form",
+			//id: "window:form",
+			unq: "form",
 			borderless: true,
 			width: 400,
 			elementsConfig: {
@@ -47,7 +48,7 @@ export default class WindowsView extends JetView {
 				ContactID: webix.rules.isNotEmpty
 			}
 		};
-		const popup = {id: "popup",
+		const popup = {name: "popup",
 			view: "window",
 			position: "center",
 			modal: true,
@@ -58,13 +59,17 @@ export default class WindowsView extends JetView {
 		return popup;
 	}
 
-	showWindow(id) {
-		const _ = this.app.getService("locale")._;	
+	showWindow(id, contact) {
+		const _ = this.app.getService("locale")._;
+		let form = this.getRoot().queryView({unq: "form"});
+
+		let popupHeader = this.getRoot().queryView({type: "header"});
+		let newId = id || contacts.getCursor();
+		if (contact) {
+			form.elements.ContactID.setValue(newId);
+			form.elements.ContactID.disable();
+		}
 		this.getRoot().show();
-		let form = $$("window:form");
-
-		let popupHeader = $$("popup").queryView({type: "header"});
-
 		if (id !== undefined) {
 			popupHeader.define("template", _("EditActivity"));
 			popupHeader.refresh();
@@ -73,22 +78,24 @@ export default class WindowsView extends JetView {
 		else {
 			popupHeader.define("template", _("AddActivity"));
 			popupHeader.refresh();
-		}	
+		}
 	}
 
 	saveActivity() {
-		let form = $$("window:form");
+		let form = this.getRoot().queryView({unq: "form"});
 		if (form.validate()) {
 			let obj = form.getValues();
 			if (obj.id === undefined) { activities.add(obj); }
 			else { activities.updateItem(obj.id, obj); }
-			form.clear();
-			form.clearValidation();
+
 			this.getRoot().hide();
 		}
 	}
 
 	closeWindow() {
+		let form = this.getRoot().queryView({unq: "form"});
+		form.clear();
+		form.clearValidation();
 		this.getRoot().hide();
 	}
 }

@@ -16,7 +16,8 @@ export default class TabView extends JetView {
 			maxWidth: 200,
 			icon: "plus-square",
 			click: () => {
-				this.WindowsView.showWindow();
+				let undefParam;
+				this.WindowsView.showWindow(undefParam, "notUndefineParam");
 			}
 		};
 
@@ -46,7 +47,7 @@ export default class TabView extends JetView {
 						}
 					});
 				},
-				"fa-edit": (ev, id) => { this.WindowsView.showWindow(id); }
+				"fa-edit": (ev, id) => { this.WindowsView.showWindow(id, "notUndefineParam"); }
 			}
 		};
 
