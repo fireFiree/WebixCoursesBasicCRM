@@ -42,5 +42,11 @@ export default {
 	EditType: "Редактировать тип",
 	EditStatus: "Редактировать статус",
 	AddType: "Добавить тип",
-	AddStatus: "Добавить статус"
+	AddStatus: "Добавить статус",
+	ThisMonth: "В этом месяце",
+	ThisWeek: "На этой неделе",
+	Today: "Сегоня",
+	Tomorrow: "Завтра",
+	Overdue: "Просроченные",
+	All: "Все"
 };

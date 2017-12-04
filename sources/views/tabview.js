@@ -26,7 +26,7 @@ export default class TabView extends JetView {
 			columns: [
 				{id: "State", 	header: "",	template: "{common.checkbox()}", checkValue: "Close", uncheckedValue: "Open", width: 30},
 				{id: "TypeID", 	header: [{content: "selectFilter"}], width: 150, sort: "text"},
-				{id: "DueDate", header: [{content: "dateFilter"}], sort: "text", width: 100},
+				{id: "DueDate", header: [{content: "dateFilter"}], sort: "text", width: 100, format: webix.i18n.dateFormatStr},
 				{id: "Details", header: [{content: "textFilter"}], fillspace: true, minWidth: 300, sort: "text"},
 				{id: "editCell", 	header: "", 	template: "<span class='webix_icon fa-edit'></span>", width: 40},
 				{id: "deleteCell", 	header: "", 	template: "<span class='webix_icon fa-trash-o'></span>", width: 40}
