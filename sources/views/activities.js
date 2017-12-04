@@ -21,7 +21,6 @@ export default class ActivitiesView extends JetView {
 			],
 			click: () => { this.toggleFilter(); }
 		};
-		const myformat = webix.Date.dateToStr("%d-%m-%Y");
 
 		const dataTable = {view: "datatable",
 			id: "activities:activitiesTable",
@@ -89,15 +88,9 @@ export default class ActivitiesView extends JetView {
 		const currentDate = new Date();
 		const curDatePart = webix.Date.datePart(currentDate);
 
-
 		switch (value) {
-			case "all" : {
-				activitiesTable.filter(() => true);
-				activitiesTable.filterByAll();
-				break;
-			}
 			case "overdue" : {
-				activitiesTable.filter(obj => obj.DueDate < currentDate);
+				activitiesTable.filter(obj => obj.DueDate < currentDate || obj.State === "Close");
 				break;
 			}
 			case "completed": {
@@ -127,6 +120,7 @@ export default class ActivitiesView extends JetView {
 			}
 			default: {
 				activitiesTable.filter(() => true);
+				activitiesTable.filterByAll();
 				break;
 			}
 		}

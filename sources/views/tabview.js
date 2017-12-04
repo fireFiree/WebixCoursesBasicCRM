@@ -31,8 +31,6 @@ export default class TabView extends JetView {
 				{id: "editCell", 	header: "", 	template: "<span class='webix_icon fa-edit'></span>", width: 40},
 				{id: "deleteCell", 	header: "", 	template: "<span class='webix_icon fa-trash-o'></span>", width: 40}
 			],
-			on: {
-			},
 			onClick: {
 				"fa-trash-o": (ev, id) => {
 					webix.confirm({

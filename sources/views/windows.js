@@ -36,7 +36,7 @@ export default class WindowsView extends JetView {
 							template: getContactNameOrEmail
 						}
 					}},
-				{view: "datepicker", label: _("Date"), timepicker: true, name: "DueDate", format: "%d-%m-%Y"},
+				{view: "datepicker", label: _("Date"), timepicker: true, name: "DueDate", format: webix.i18n.dateFormatStr},
 				{view: "checkbox", label: _("Completed"), name: "State", checkValue: "Close", uncheckedValue: "Open"},
 				{cols: [{},
 					{view: "button", value: _("Save"), click: () => this.saveActivity(), btn: "save"},
@@ -52,7 +52,14 @@ export default class WindowsView extends JetView {
 			position: "center",
 			modal: true,
 			head: {view: "template", template: _("AddActivity"), type: "header"},
-			body: form
+			body: form,
+			on: {
+				onHide: () => {
+					let frm = this.getRoot().queryView({unq: "form"});
+					frm.clear();
+					frm.clearValidation();
+				}
+			}
 		};
 
 		return popup;
@@ -88,14 +95,9 @@ export default class WindowsView extends JetView {
 
 			this.getRoot().hide();
 		}
-		form.clear();
-		form.clearValidation();
 	}
 
 	closeWindow() {
-		let form = this.getRoot().queryView({unq: "form"});
-		form.clear();
-		form.clearValidation();
 		this.getRoot().hide();
 	}
 }

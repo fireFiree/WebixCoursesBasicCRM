@@ -42,5 +42,11 @@ export default {
 	EditType: "Edit Type",
 	EditStatus: "Edit Status",
 	AddType: "Add Type",
-	AddStatus: "Add Status"
+	AddStatus: "Add Status",
+	ThisMonth: "This Month",
+	ThisWeek: "This Week",
+	Today: "Today",
+	Tomorrow: "Tomorrow",
+	Overdue: "Overdue",
+	All: "All"
 };

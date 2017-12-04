@@ -21,7 +21,7 @@ export default class FormView extends JetView {
 				{rows: [
 					{view: "text", label: _("FirstName"), name: "FirstName"},
 					{view: "text", label: _("LastName"), name: "LastName"},
-					{view: "datepicker", label: _("StartDate"), stringResult: true, timepicker: true, name: "StartDate", format: "%d-%m-%Y"},
+					{view: "datepicker", label: _("StartDate"), timepicker: true, name: "StartDate", format: webix.i18n.dateFormatStr},
 					{view: "richselect",
 						label: _("Status"),
 						name: "StatusID",
@@ -42,7 +42,7 @@ export default class FormView extends JetView {
 					{view: "text", label: "Email", name: "Email"},
 					{view: "text", label: "Skype", name: "Skype"},
 					{view: "text", label: _("Phone"), name: "Phone"},
-					{view: "datepicker", label: _("BirthDay"), name: "Birthday", stringResult: true, format: "%d-%m-%Y"},
+					{view: "datepicker", label: _("BirthDay"), timepicker: true, name: "Birthday", format: webix.i18n.dateFormatStr},
 					{rows: [
 						{template: "Preview", id: "preview", autoWidth: true, height: 250},
 						{

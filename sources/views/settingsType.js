@@ -43,7 +43,14 @@ export default class TypeView extends JetView {
 			position: "center",
 			modal: true,
 			head: {view: "template", template: _("Type"), type: "header"},
-			body: form
+			body: form,
+			on: {
+				onHide() {
+					let frm = $$("setting:type:form");
+					frm.clear();
+					frm.clearValidation();
+				}
+			}
 		};
 
 		return popup;
@@ -56,8 +63,6 @@ export default class TypeView extends JetView {
 
 		let popupHeader = $$("type:popup").queryView({type: "header"});
 		let form = $$("setting:type:form");
-		form.clear();
-		form.clearValidation();
 
 		if (id !== undefined) {
 			popupHeader.define("template", _("EditType"));

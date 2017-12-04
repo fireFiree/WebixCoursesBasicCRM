@@ -43,7 +43,14 @@ export default class StatusView extends JetView {
 			position: "center",
 			modal: true,
 			head: {view: "template", template: _("Status"), type: "header"},
-			body: form
+			body: form,
+			on: {
+				onHide() {
+					let frm = $$("setting:status:form");
+					frm.clear();
+					frm.clearValidation();
+				}
+			}
 		};
 
 		return popup;
@@ -56,8 +63,6 @@ export default class StatusView extends JetView {
 
 		let popupHeader = $$("status:popup").queryView({type: "header"});
 		let form = $$("setting:status:form");
-		form.clear();
-		form.clearValidation();
 
 		if (id !== undefined) {
 			popupHeader.define("template", _("EditStatus"));
