@@ -9,7 +9,6 @@ export default class WindowsView extends JetView {
 		const _ = this.app.getService("locale")._;
 		const form = {
 			view: "form",
-			//id: "window:form",
 			unq: "form",
 			borderless: true,
 			width: 400,
@@ -62,7 +61,6 @@ export default class WindowsView extends JetView {
 	showWindow(id, contact) {
 		const _ = this.app.getService("locale")._;
 		let form = this.getRoot().queryView({unq: "form"});
-
 		let popupHeader = this.getRoot().queryView({type: "header"});
 		let newId = id || contacts.getCursor();
 		if (contact) {
@@ -90,6 +88,8 @@ export default class WindowsView extends JetView {
 
 			this.getRoot().hide();
 		}
+		form.clear();
+		form.clearValidation();
 	}
 
 	closeWindow() {

@@ -26,13 +26,13 @@ function contactDetailsToHtml(obj) {
 export default class CardView extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
-		let conctactDescription = {view: "template",
+		const conctactDescription = {view: "template",
 			id: "contactDescription",
 			borderless: true,
 			template: contactDetailsToHtml
 		};
 
-		let buttons = {cols: [
+		const buttons = {cols: [
 			{view: "button",
 				type: "icon",
 				icon: "edit",
@@ -83,7 +83,7 @@ export default class CardView extends JetView {
 		]};
 	}
 	urlChange(view, url) {
-		let id = url[0].params.id;
+		const id = url[0].params.id;
 		if (id) {
 			$$("contactDescription").setValues(contacts.getItem(id));
 		}

@@ -58,13 +58,13 @@ export default class ContactsView extends JetView {
 			}
 		};
 
-		let ui = {cols: [
+		const ui = {cols: [
 			{rows: [search, contactsList, addBtn]}, {$subview: true}]};
 
 		return ui;
 	}
 	init(view, url) {
-		let list = $$("contactsList");
+		const list = $$("contactsList");
 		contacts.waitData.then(() => {
 			list.parse(contacts);
 			let id = list.getFirstId();
@@ -78,7 +78,7 @@ export default class ContactsView extends JetView {
 	}
 
 	urlChange(view, url) {
-		let list = $$("contactsList");
+		const list = $$("contactsList");
 		let id = list.getFirstId();
 
 		if (url[1]) { id = url[1].params.id; }

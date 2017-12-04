@@ -17,7 +17,7 @@ export default class ActivitiesView extends JetView {
 				{id: "today", value: _("Today")},
 				{id: "tomorrow", value: _("Tomorrow")},
 				{id: "thisweek", value: _("ThisWeek")},
-				{id: "nextweek", value: _("NextWeek")}
+				{id: "thismonth", value: _("ThisMonth")}
 			],
 			click: () => { this.toggleFilter(); }
 		};
@@ -28,7 +28,7 @@ export default class ActivitiesView extends JetView {
 			columns: [
 				{id: "State", 	header: "",	template: "{common.checkbox()}", checkValue: "Close", uncheckedValue: "Open", width: 30},
 				{id: "TypeID", 	header: [_("ActivityType"), {content: "selectFilter"}], width: 150, sort: "text"},
-				{id: "DueDate", header: [_("DueDate"), {content: "dateFilter"}], stringResult: true, sort: "text", width: 100, format: myformat},
+				{id: "DueDate", header: [_("DueDate"), {content: "dateFilter"}], sort: "text", width: 100, format: webix.i18n.dateFormatStr},
 				{id: "Details", header: [_("Details"), {content: "textFilter"}], fillspace: true, minWidth: 300, sort: "text"},
 				{id: "ContactID", header: [_("Contact"), {content: "selectFilter"}], sort: "text", width: 250},
 				{id: "editCell", 	header: "", 	template: "<span class='webix_icon fa-edit'></span>", width: 40},
@@ -67,7 +67,6 @@ export default class ActivitiesView extends JetView {
 		return ui;
 	}
 	init() {
-		contacts.setCursor(null);
 		let activitiesTable = $$("activities:activitiesTable");
 		activitiesTable.parse(activities);
 
@@ -86,32 +85,51 @@ export default class ActivitiesView extends JetView {
 
 	toggleFilter() {
 		const value = this.getRoot().queryView({name: "filter"}).getValue();
-		let activitiesTable = $$("activities:activitiesTable");
-		alert( value);
-		/* if (value == "all") {
-			activitiesTable.filter(() => true);
-			activitiesTable.filterByAll();
+		const activitiesTable = $$("activities:activitiesTable");
+		const currentDate = new Date();
+		const curDatePart = webix.Date.datePart(currentDate);
+
+
+		switch (value) {
+			case "all" : {
+				activitiesTable.filter(() => true);
+				activitiesTable.filterByAll();
+				break;
+			}
+			case "overdue" : {
+				activitiesTable.filter(obj => obj.DueDate < currentDate);
+				break;
+			}
+			case "completed": {
+				activitiesTable.filter(obj => obj.State === "Close");
+				break;
+			}
+			case "today": {
+				activitiesTable.filter(obj => webix.Date.equal(obj.DueDate, curDatePart));
+				break;
+			}
+			case "tomorrow": {
+				activitiesTable.filter(obj => obj.DueDate.getDay() === currentDate.getDay() + 1 &&
+				obj.DueDate.getYear() === currentDate.getYear());
+				break;
+			}
+			case "thisweek": {
+				activitiesTable.filter(obj => webix.Date.equal(
+					webix.Date.weekStart(obj.DueDate),
+				 	webix.Date.weekStart(currentDate))
+				);
+				break;
+			}
+			case "thismonth": {
+				activitiesTable.filter(obj => obj.DueDate.getMonth() === currentDate.getMonth() &&
+				obj.DueDate.getYear() === currentDate.getYear());
+				break;
+			}
+			default: {
+				activitiesTable.filter(() => true);
+				break;
+			}
 		}
-		else if (value == "completed") {
-			activitiesTable.filter(obj => obj.State == "Close");
-			activitiesTable.filterByAll();
-		}
-		else if (value == "thisweek") {
-			activitiesTable.filter(obj => obj.State == 1);
-		}
-		else if (value == "overdue") {
-			activitiesTable.filter(obj => obj.State == 1);
-		}
-		else if (value == "nextweek") {
-			activitiesTable.filter(obj => obj.State == 1);
-		}
-		else if (value == "today") {
-			activitiesTable.filter(obj => obj.State == 1);
-		}
-		else if (value == "tomorrow") {
-			activitiesTable.filter(obj => obj.State == 1)
-			;
-		} */
 	}
 }
 
