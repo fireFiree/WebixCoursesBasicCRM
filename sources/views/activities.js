@@ -19,7 +19,7 @@ export default class ActivitiesView extends JetView {
 				{id: "thisweek", value: _("ThisWeek")},
 				{id: "thismonth", value: _("ThisMonth")}
 			],
-			click: () => { this.toggleFilter(); }
+			click: () => { $$("activities:activitiesTable").filterByAll(); }
 		};
 
 		const dataTable = {view: "datatable",
@@ -69,6 +69,11 @@ export default class ActivitiesView extends JetView {
 		let activitiesTable = $$("activities:activitiesTable");
 		activitiesTable.parse(activities);
 
+		activitiesTable.attachEvent("onAfterFilter", function () {
+			this.blockEvent();
+			this.$scope.toggleFilter();
+			this.unblockEvent();
+		});
 		getContactOptions().then((options) => {
 			activitiesTable.getColumnConfig("ContactID").collection = options;
 			activitiesTable.refreshColumns();
@@ -90,37 +95,36 @@ export default class ActivitiesView extends JetView {
 
 		switch (value) {
 			case "overdue" : {
-				activitiesTable.filter(obj => obj.DueDate < currentDate || obj.State === "Close");
+				activitiesTable.filter(obj => obj.DueDate < currentDate || obj.State === "Close", "", true);
 				break;
 			}
 			case "completed": {
-				activitiesTable.filter(obj => obj.State === "Close");
+				activitiesTable.filter(obj => obj.State === "Close", "", true);
 				break;
 			}
 			case "today": {
-				activitiesTable.filter(obj => webix.Date.equal(obj.DueDate, curDatePart));
+				activitiesTable.filter(obj => webix.Date.equal(obj.DueDate, curDatePart), "", true);
 				break;
 			}
 			case "tomorrow": {
 				activitiesTable.filter(obj => obj.DueDate.getDay() === currentDate.getDay() + 1 &&
-				obj.DueDate.getYear() === currentDate.getYear());
+				obj.DueDate.getYear() === currentDate.getYear(), "", true);
 				break;
 			}
 			case "thisweek": {
 				activitiesTable.filter(obj => webix.Date.equal(
 					webix.Date.weekStart(obj.DueDate),
-				 	webix.Date.weekStart(currentDate))
+				 	webix.Date.weekStart(currentDate), "", true)
 				);
 				break;
 			}
 			case "thismonth": {
 				activitiesTable.filter(obj => obj.DueDate.getMonth() === currentDate.getMonth() &&
-				obj.DueDate.getYear() === currentDate.getYear());
+				obj.DueDate.getYear() === currentDate.getYear(), "", true);
 				break;
 			}
 			default: {
-				activitiesTable.filter(() => true);
-				activitiesTable.filterByAll();
+				activitiesTable.filter(() => true, "", true);
 				break;
 			}
 		}
